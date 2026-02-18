@@ -1,4 +1,13 @@
-git add package.json
-git add index.js
-git commit -m "Corrigindo arquivos base"
-git push origin main
+{
+  "name": "eletrovision-painel",
+  "version": "1.0.0",
+  "description": "Painel IPTV Eletrovision",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.0"
+  }
+}
