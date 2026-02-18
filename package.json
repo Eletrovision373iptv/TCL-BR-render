@@ -1,0 +1,4 @@
+git add package.json
+git add index.js
+git commit -m "Corrigindo arquivos base"
+git push origin main
