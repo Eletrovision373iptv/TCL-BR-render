@@ -1,18 +1,25 @@
 import requests
 
 def gerar():
-    print("Buscando canais TCL/LG (Amagi)...")
+    print("Baixando lista TCL Brasil via APSATTV...")
+    # O link certeiro que você encontrou
+    url = "https://www.apsattv.com/tclbr.m3u"
+    headers = {'User-Agent': 'Mozilla/5.0'}
+
     try:
-        # Fonte estável para canais FAST/LG/TCL no Brasil
-        data = requests.get("https://i.mjh.nz/LugoTV/br.json").json()
+        response = requests.get(url, headers=headers, timeout=30)
+        response.raise_for_status()
+        
+        # Pega o conteúdo e remove espaços extras
+        conteudo = response.text.strip()
+
         with open("lista.m3u", "w", encoding="utf-8") as f:
-            f.write("#EXTM3U\n")
-            for id, c in data['channels'].items():
-                f.write(f'#EXTINF:-1 tvg-id="{id}" tvg-logo="{c["logo"]}" group-title="TCL - LG CHANNELS",{c["name"]}\n')
-                f.write(f'{c["url"]}\n')
-        print("✅ Arquivo lista.m3u da TCL gerado!")
+            f.write(conteudo)
+            
+        print("✅ Sucesso! O arquivo lista.m3u da TCL foi atualizado.")
+
     except Exception as e:
-        print(f"❌ Erro ao gerar TCL: {e}")
+        print(f"❌ Erro ao baixar TCL: {e}")
 
 if __name__ == "__main__":
     gerar()
