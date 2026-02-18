@@ -23,11 +23,25 @@ async function parseM3U() {
                 const info = lines[i];
                 const url = lines[i + 1]?.trim();
                 
-                // Extração de metadados
-                const nomeMatch = info.split(',')[1] || "Canal TCL";
-                const logoMatch = info.match(/tvg-logo="([^"]+)"/);
-                const catMatch = info.match(/group-title="([^"]+)"/);
-                const idMatch = info.match(/tvg-id="([^"]+)"/);
+// Extração de metadados
+const nomeMatch = info.split(',')[1] || "Canal TCL";
+const logoMatch = info.match(/tvg-logo="([^"]+)"/);
+const catMatch = info.match(/group-title="([^"]+)"/);
+const idMatch = info.match(/tvg-id="([^"]+)"/);
+
+// Link que você encontrou
+const LOGO_TCL = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Logo_of_the_TCL_Corporation.svg/1280px-Logo_of_the_TCL_Corporation.svg.png";
+
+if (url && url.startsWith('http')) {
+    canais.push({
+        id: idMatch ? idMatch[1] : `tcl-${i}`,
+        nome: nomeMatch.trim(),
+        // Se não tiver logo no arquivo, usa o da TCL
+        logo: (logoMatch && logoMatch[1]) ? logoMatch[1] : LOGO_TCL,
+        categoria: catMatch ? catMatch[1] : 'TCL CHANNELS',
+        url: url 
+    });
+}
 
                 if (url && url.startsWith('http')) {
                     // Limpeza de ID para evitar erros na URL
